@@ -60,13 +60,11 @@ declare @GotP as varchar(max)
 set @MonthName = DATEName(month, getdate())
 set @MonthNumber = datepart(m, getdate())
 
-if @MonthNumber < 5
+if @MonthNumber < 5 or @MonthNumber > 9
 		set @season = 'Winter'
 else
-if @MonthNumber < 10
 		set @season = 'Summer'
-else
-		set @season = 'Winter'
+
 
 if @MonthName like '%p%'
 		set @GotP = 'Yup'
