@@ -11,30 +11,44 @@ set @Server = @@SERVERNAME
 set @Version = @@VERSION
 set @Errors = @@ERROR
 set @Connections = @@CONNECTIONS
-set @Rcvd = cast(@@PACK_RECEIVED as real) / cast(@@PACK_SENT as real)
+set @Rcvd = cast(@@PACK_RECEIVED as real) / cast(@@PACK_SENT as real) *100
 
 select 
 		cast(@Server as nVarchar(20)) as 'Server',
 		cast(@Version as nvarchar(35)) as 'Version',
 		@Errors as 'Errors',
 		@Connections as 'Connections',
-		@Rcvd as 'Rcvd%'
+		cast(@Rcvd as varchar(5)) + '%' as 'Rcvd%'
 go
 
 --q2
-declare @start as nvarchar(max)
-declare @back as smalldatetime
+declare @month as nvarchar(max)
+declare @day as int
+declare @year as int
+declare @back as datetime
 
-set @start = 'October 31 2000'
---set @back = DATEADD (minute, -123456789, convert(smalldatetime, GETDATE(),9)
+set @month = DATENAME(month, GETDATE())
+set @day = DATEPART(day, GetDate())
+set @year = DATEPART(year, Getdate())
+set @back = DATEADD (minute, -123456789, GETDATE())
 
 select
-		cast(@start as nvarchar(20)) as 'Start',
-		@back as 'Wayback'
+		cast(@month as nvarchar(12)) +' '+ cast(@day as nvarchar(2)) + ' ' + cast(@year as nvarchar(4)) as 'Start',
+		convert(varchar(20) ,@back , 120)  as 'Wayback'
 go
 
 --q3
+declare @Christmas as date
+declare @Days as smallint
+declare @CurrentYear as int
 
+set @CurrentYear = DATEPART(year, getdate())
+set @Christmas = DATEFROMPARTS(@CurrentYear, 12, 25)
+set @days = datediff(day, GETDATE(), @christmas)
+
+select
+	@days as 'Days',
+	convert(nvarchar(15), @Christmas, 102) as 'XMas'
 go
 
 --q4
