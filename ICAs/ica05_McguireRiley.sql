@@ -29,6 +29,7 @@ go
 
 --Q4
 declare @max as int = 480000
+declare @min as int = 420000
 select
 	TrackId as 'Track ID',
 	left(Name, 24) as 'Name',
@@ -36,7 +37,7 @@ select
 from 
 	Track
 where
-	GenreId = 2 and Milliseconds > 420000 and Milliseconds < @max
+	GenreId = 2 and Milliseconds > @min and Milliseconds < @max
 	
 go
 
@@ -48,7 +49,7 @@ select
 from 
 	Customer
 where
-	Country in ('argentina', 'brazil') and Company is not null
+	Country in ('argentina', 'brazil', 'Ecuador', 'Suriname', 'Bolivia', 'Guyana', 'Uruguay', 'Chile', 'Colombia', 'Paraguay', 'Peru', 'Venezuela') and Company is not null
 go
 
 --Q6
