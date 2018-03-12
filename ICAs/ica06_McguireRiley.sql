@@ -10,6 +10,7 @@ from
 	Track
 where
 	GenreId in (13, 25) and UnitPrice <= @max and UnitPrice >= @min
+order by Name
 go
 
 --q2
@@ -69,6 +70,7 @@ from
 where
 	PostalCode like '[A-Z][0-9][A-Z] [0-9][A-Z][0-9]'
 	or Phone like '%[0-2][0-2][0-2][0-2]%'
+order by [First Name]
 go
 
 --q6
@@ -98,9 +100,23 @@ order by country, city
 go
 
 --q8
-
+select distinct
+	Country as 'Country'
+from Customer
+where
+	country like '[A-F]%'
+order by country desc
 go
 
 --q9
+declare @NameLength as int = 3
+select distinct
+	substring(name,1,CHARINDEX(' ', name)) as 'First Word'
+from Track
+where
+	GenreId like 1
+	and len(substring(name,1,CHARINDEX(' ', name))) > @NameLength
+	and name like '[aeoui]%'
+order by substring(name,1,CHARINDEX(' ', name))
 go
 
