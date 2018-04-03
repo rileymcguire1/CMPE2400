@@ -1,6 +1,6 @@
 /****** Refresh ClassTrak DB - DATA ONLY  ******/
 
-USE [herbv_ClassTrak2016]
+USE [rmcguire2_ClassTrak]
 GO
 
 --SET ANSI_NULLS ON
