@@ -77,4 +77,62 @@ alter table Sessions add
 
 go
 
- 
+--populate class table with data
+if exists 
+(	
+	select *
+	from sysobjects
+	where [name] = 'PopulateClass'
+)
+drop procedure PopulateClass
+go
+create procedure PopulateClass
+@ErrorMessage as varchar(max) output
+as
+	if not exists 
+		(
+			select *
+			from sysobjects
+			where [name] = 'Class'
+		)
+		begin
+			set @ErrorMessage = 'Class table does not exist'
+			return -1
+		end
+	insert into Class(ClassID, ClassDescription)
+	values 
+		('moto_3', 'Default Chassis, custom 125cc engine'),
+		('moto_2', 'Common 600cc engine and electronics, Custom Chassis'),
+		('motogp', '1000cc Full Factory Spec, common electronics')
+	set @ErrorMessage = 'OK'
+	return 0;
+go
+declare @status as varchar(max)
+exec PopulateClass @status
+select @status
+
+--populate bike table with data
+if exists 
+(	
+	select *
+	from sysobjects
+	where [name] = 'PopulateBikes'
+)
+drop procedure PopulateBikes
+go
+create procedure PopulateBikes
+@ErrorMessage as varchar(max) output
+as
+	if not exists 
+		(
+			select *
+			from sysobjects
+			where [name] = 'Bikes'
+		)
+		begin
+			set @ErrorMessage = 'Bikes table does not exist'
+			return -1
+		end
+	
+	
+go
