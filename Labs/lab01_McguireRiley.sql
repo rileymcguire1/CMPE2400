@@ -626,6 +626,13 @@ exec ClassSummary @status output, @ClassID
 print @status
 go
 
+declare @status as varchar(max)
+declare @ClassID as varchar(6) = 'moto_3'
+declare @RiderID as smallint = 11
+exec ClassSummary @status output, @ClassID
+print @status
+go
+
 --RemoveClass testing------------------------
 declare @status as varchar(max)
 declare @ClassID as varchar(6) = 'motogp'
